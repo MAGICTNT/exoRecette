@@ -107,7 +107,7 @@ public class IngredientDAO extends BaseDAO<Ingredient> {
         List<Ingredient> elementsList = new ArrayList<Ingredient>();
         try {
             connection = DatabaseManager.getConnection();
-            query = "SELECT * FROM categorie";
+            query = "SELECT * FROM ingredient";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
