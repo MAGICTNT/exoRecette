@@ -118,7 +118,7 @@ public class ComposerDAO extends BaseDAO<Composer> {
         List<Composer> elementsList = new ArrayList<Composer>();
         try {
             connection = DatabaseManager.getConnection();
-            query = "SELECT * FROM categorie";
+            query = "SELECT * FROM composer";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -134,6 +134,28 @@ public class ComposerDAO extends BaseDAO<Composer> {
         }catch (SQLException e){
             System.out.println(e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    public Composer getByIdRecetteAndIdIngredient(int idRecette, int idIngredient) throws SQLException {
+        try {
+            connection = DatabaseManager.getConnection();
+            query = "SELECT * FROM composer WHERE id_ingredient = ? and id_recette = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, idIngredient);
+            statement.setInt(2, idRecette);
+            resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                return Composer.builder()
+                        .idComposer(resultSet.getInt(1))
+                        .recette(recetteDAO.get(resultSet.getInt("id_recette")))
+                        .ingredient(ingredientDAO.get(resultSet.getInt("id_ingredient")))
+                        .build();
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }
