@@ -14,7 +14,7 @@ public class ComposerDAO extends BaseDAO<Composer> {
     private RecetteDAO recetteDAO;
     private IngredientDAO ingredientDAO;
 
-    private ComposerDAO() {
+    public ComposerDAO() {
         this.recetteDAO = new RecetteDAO();
         this.ingredientDAO = new IngredientDAO();
     }

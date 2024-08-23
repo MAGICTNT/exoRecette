@@ -13,7 +13,7 @@ import java.util.List;
 public class CommentaireDAO extends BaseDAO<Commentaire> {
     private RecetteDAO recetteDAO;
 //
-    private CommentaireDAO(){
+public CommentaireDAO(){
         this.recetteDAO = new RecetteDAO();
     }
     @Override
@@ -132,6 +132,26 @@ public class CommentaireDAO extends BaseDAO<Commentaire> {
         }catch (SQLException e){
             System.out.println(e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    public boolean deleteByIdRecette(int idRecette) throws SQLException {
+        try{
+            connection = DatabaseManager.getConnection();
+            query = "DELETE FROM commentaire WHERE id_recette = ?";
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, idRecette);
+            int rowsDeleted = statement.executeUpdate();
+            connection.commit();
+            return rowsDeleted == 1;
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
     }
 }

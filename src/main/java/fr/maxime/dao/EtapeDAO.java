@@ -13,7 +13,7 @@ import java.util.List;
 public class EtapeDAO extends BaseDAO<Etape> {
     private RecetteDAO recetteDAO;
 
-    private EtapeDAO(){
+    public EtapeDAO(){
         this.recetteDAO = new RecetteDAO();
     }
 

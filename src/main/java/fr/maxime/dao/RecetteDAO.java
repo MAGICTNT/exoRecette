@@ -14,7 +14,7 @@ import java.util.List;
 public class RecetteDAO extends BaseDAO<Recette> {
     private CategorieDAO categorieDAO;
 
-    protected RecetteDAO() {
+    public RecetteDAO() {
         this.categorieDAO = new CategorieDAO();
     }
 
@@ -77,7 +77,7 @@ public class RecetteDAO extends BaseDAO<Recette> {
         if (get(element.getIdRecette()) == null) {
             return null;
         }
-        String query = "UPDATE recette SET label_recette = ?,temps_preparation = ?, temps_cuisson = ?,difficulte = ? , id_recette = ?  WHERE id_recette = ?";
+        String query = "UPDATE recette SET label_recette = ?,temps_preparation = ?, temps_cuisson = ?,difficulte = ?   WHERE id_recette = ?";
         try {
 
             connection = DatabaseManager.getConnection();
@@ -87,13 +87,12 @@ public class RecetteDAO extends BaseDAO<Recette> {
             statement.setInt(3, element.getTempsCuisson());
             statement.setString(4, element.getDifficulte());
             statement.setInt(5, element.getCategorie().getIdCategorie());
-            statement.setInt(6, element.getIdRecette());
 
             int nbrRows = statement.executeUpdate();
             connection.commit();
             return element;
         } catch (SQLException e) {
-            System.out.println("erreur lors de la maj de la categorie: " + e.getMessage());
+            System.out.println("erreur lors de la maj de la recette: " + e.getMessage());
             return null;
         }
     }
